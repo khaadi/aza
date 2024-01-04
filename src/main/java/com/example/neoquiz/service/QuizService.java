@@ -3,6 +3,7 @@ package com.example.neoquiz.service;
 import com.example.neoquiz.dto.response.QuizFullDescResponse;
 import com.example.neoquiz.dto.response.QuizResponse;
 import com.example.neoquiz.entity.Quiz;
+import com.example.neoquiz.exception.NotFoundException;
 import com.example.neoquiz.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,23 +21,19 @@ public class QuizService {
         List<QuizResponse> quizResponses = new ArrayList<>();
 
         for (Quiz quiz : quizzes) {
-            quizResponses.add(QuizResponse.builder().name(quiz.getName()).build());
+            quizResponses.add(QuizResponse.builder()
+                    .name(quiz.getName())
+                    .build());
         }
         return quizResponses;
     }
 
     public QuizFullDescResponse getFullDescriptionById(Long id) {
-        Quiz quiz = quizRepository.findById(id).orElseThrow();
+        Quiz quiz = quizRepository.findById(id).orElseThrow(() -> new NotFoundException("Quiz not found!"));
 
         return QuizFullDescResponse.builder()
                 .name(quiz.getName())
                 .description(quiz.getDescription())
-                .build();
-    }
-
-    private QuizResponse mapQuizToQuizResponse(Quiz quiz) {
-        return QuizResponse.builder()
-                .name(quiz.getName())
                 .build();
     }
 }

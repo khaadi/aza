@@ -3,6 +3,7 @@ package com.example.neoquiz.service;
 import com.example.neoquiz.dto.response.ArticleResponse;
 import com.example.neoquiz.dto.response.ArticleSearchResponse;
 import com.example.neoquiz.entity.Article;
+import com.example.neoquiz.exception.NotFoundException;
 import com.example.neoquiz.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,7 @@ public class ArticleService {
     }
 
     public ArticleResponse getArticleByName(String name) {
-        Article article = articleRepository.findByName(name).orElseThrow();
+        Article article = articleRepository.findByName(name).orElseThrow(() -> new NotFoundException("Article not found!"));
 
         return ArticleResponse.builder()
                 .name(article.getName())
