@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,8 +16,14 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public List<Article> getAllArticles(Pageable pageable) {
-        return articleRepository.findAll(pageable).stream().toList();
+    public List<ArticleSearchResponse> getAllArticles(Pageable pageable) {
+        List<Article> articles = articleRepository.findAll(pageable).stream().toList();
+        List<ArticleSearchResponse> searchResponses = new ArrayList<>();
+        for (Article article: articles) {
+            searchResponses.add(ArticleSearchResponse.builder().name(article.getName()).genre(article.getGenre()).build());
+        }
+
+        return searchResponses;
     }
 
     public ArticleResponse getArticleByName(String name) {
@@ -30,7 +37,16 @@ public class ArticleService {
     }
 
     public List<ArticleSearchResponse> searchArticleByNameAndGenre(String name, String genre) {
-        return articleRepository.findAllByName(name, genre);
+        if (genre == null) {
+            genre = "";
+        }
+        return articleRepository.findAllByNameAndGenre(name, genre).stream().map(this::mapToArticleSearchResponse).toList();
+    }
+    private ArticleSearchResponse mapToArticleSearchResponse(Article article) {
+        return ArticleSearchResponse.builder()
+                .name(article.getName())
+                .genre(article.getGenre())
+                .build();
     }
 
 

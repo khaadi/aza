@@ -1,5 +1,6 @@
 package com.example.neoquiz.entity;
 
+import com.example.neoquiz.entity.base_entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
@@ -13,10 +14,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Question {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class Question extends BaseEntity {
+
     @Column(unique = true)
     String name;
 

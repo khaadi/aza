@@ -1,9 +1,8 @@
 package com.example.neoquiz.entity;
 
+import com.example.neoquiz.entity.base_entity.BaseEntity;
 import com.example.neoquiz.enums.Genre;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -17,6 +16,12 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article extends BaseEntity{
+
+    String name;
+
+    @Column(length = 8000)
+    String description;
+
     @Enumerated(EnumType.STRING)
     Genre genre;
 }
