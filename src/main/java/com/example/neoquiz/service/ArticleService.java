@@ -2,6 +2,7 @@ package com.example.neoquiz.service;
 
 import com.example.neoquiz.dto.response.ArticleResponse;
 import com.example.neoquiz.dto.response.ArticleSearchResponse;
+import com.example.neoquiz.dto.response.CardResponse;
 import com.example.neoquiz.entity.Article;
 import com.example.neoquiz.exception.NotFoundException;
 import com.example.neoquiz.repository.ArticleRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +49,18 @@ public class ArticleService {
         return ArticleSearchResponse.builder()
                 .name(article.getName())
                 .genre(article.getGenre())
+                .build();
+    }
+
+    public CardResponse getCardAndNameForImage(String name) {
+        Article article = articleRepository.findByName(name).orElseThrow(() -> new NotFoundException("Article not found!"));
+
+        Random random = new Random();
+        Integer token = random.nextInt(1, 8);
+
+        return CardResponse.builder()
+                .id(token)
+                .name(article.getName())
                 .build();
     }
 

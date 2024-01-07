@@ -21,11 +21,11 @@ public class Quiz extends BaseEntity {
 
     String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    List<Question> questions;
-
     @Enumerated(EnumType.STRING)
     Genre genre;
 
     String description;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "quiz")
+    List<Question> questions;
 }

@@ -1,7 +1,9 @@
 package com.example.neoquiz.service;
 
+import com.example.neoquiz.dto.response.QuestionsResponse;
 import com.example.neoquiz.dto.response.QuizFullDescResponse;
 import com.example.neoquiz.dto.response.QuizResponse;
+import com.example.neoquiz.entity.Question;
 import com.example.neoquiz.entity.Quiz;
 import com.example.neoquiz.exception.NotFoundException;
 import com.example.neoquiz.repository.QuizRepository;
@@ -22,8 +24,8 @@ public class QuizService {
 
         for (Quiz quiz : quizzes) {
             quizResponses.add(QuizResponse.builder()
-                    .name(quiz.getName())
-                    .build());
+                                          .name(quiz.getName())
+                                          .build());
         }
         return quizResponses;
     }
@@ -34,6 +36,34 @@ public class QuizService {
         return QuizFullDescResponse.builder()
                 .name(quiz.getName())
                 .description(quiz.getDescription())
+                .genre(quiz.getGenre())
+                .build();
+    }
+
+    public List<QuizResponse> getFourQuizzesByName() {
+        List<Quiz> quizzes = quizRepository.findAllByName();
+        List<QuizResponse> quizResponses = new ArrayList<>();
+
+        for (Quiz quiz : quizzes) {
+            quizResponses.add(QuizResponse.builder().name(quiz.getName()).build());
+        }
+
+        return quizResponses;
+    }
+
+    public List<QuestionsResponse> getQuestionsByName(String name) {
+        Quiz quiz = quizRepository.findByName(name).orElseThrow(() -> new NotFoundException("Quiz not found!"));
+
+        return quiz.getQuestions().stream().map(this::mapToQuestionResponse).toList();
+    }
+
+    private QuestionsResponse mapToQuestionResponse(Question question) {
+        return QuestionsResponse.builder()
+                .name(question.getName())
+                .AnswerTrue(question.getAnswerTrue())
+                .firstAnswerFalse(question.getFirstAnswerFalse())
+                .secondAnswerFalse(question.getSecondAnswerFalse())
+                .thirdAnswerFalse(question.getThirdAnswerFalse())
                 .build();
     }
 }

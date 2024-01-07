@@ -12,7 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface ArticleRepository extends PagingAndSortingRepository<Article, Long> {
-    Optional<Article> findByName(String name);
+    @Query(value = "SELECT * FROM article WHERE name = :articleName", nativeQuery = true)
+    Optional<Article> findByName(String articleName);
 
     @Query(value = "SELECT * FROM article a WHERE LOWER(a.name) LIKE LOWER(CONCAT('%', ?1,'%')) " +
             "AND a.genre LIKE UPPER(CONCAT('%', ?2,'%'))",

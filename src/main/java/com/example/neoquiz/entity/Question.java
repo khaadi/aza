@@ -24,6 +24,6 @@ public class Question extends BaseEntity {
     String secondAnswerFalse;
     String thirdAnswerFalse;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     Quiz quiz;
 }

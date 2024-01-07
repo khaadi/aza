@@ -1,6 +1,6 @@
 package com.example.neoquiz.dto.response;
 
-import com.example.neoquiz.enums.Genre;
+import com.example.neoquiz.entity.Quiz;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,8 +9,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class QuizFullDescResponse {
+public class QuestionsResponse {
     String name;
-    String description;
-    Genre genre;
+    String AnswerTrue;
+    String firstAnswerFalse;
+    String secondAnswerFalse;
+    String thirdAnswerFalse;
+
 }
