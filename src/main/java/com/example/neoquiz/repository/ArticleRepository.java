@@ -1,8 +1,7 @@
 package com.example.neoquiz.repository;
 
-import com.example.neoquiz.dto.response.ArticleSearchResponse;
 import com.example.neoquiz.entity.Article;
-import com.example.neoquiz.enums.Genre;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ArticleRepository extends PagingAndSortingRepository<Article, Long> {
+public interface ArticleRepository extends PagingAndSortingRepository<Article, Long>, JpaRepository<Article, Long> {
     @Query(value = "SELECT * FROM article WHERE name = :articleName", nativeQuery = true)
     Optional<Article> findByName(String articleName);
 

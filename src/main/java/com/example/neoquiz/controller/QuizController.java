@@ -7,6 +7,7 @@ import com.example.neoquiz.service.QuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,5 +37,10 @@ public class QuizController {
     @GetMapping("/questions")
     public List<QuestionsResponse> getQuestions(@RequestParam String name) {
         return quizService.getQuestionsByName(name);
+    }
+
+    @PostMapping("/image")
+    public String uploadImage(@RequestParam MultipartFile multipartFile, @RequestParam String name) {
+        return quizService.uploadImage(multipartFile, name);
     }
 }

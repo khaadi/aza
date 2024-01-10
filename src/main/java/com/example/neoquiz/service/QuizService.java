@@ -9,6 +9,7 @@ import com.example.neoquiz.exception.NotFoundException;
 import com.example.neoquiz.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuizService {
     private final QuizRepository quizRepository;
+    private final ImageUploadService uploadService;
 
     public List<QuizResponse> getAllQuizzes() {
         List<Quiz> quizzes = quizRepository.findAll();
@@ -25,6 +27,7 @@ public class QuizService {
         for (Quiz quiz : quizzes) {
             quizResponses.add(QuizResponse.builder()
                                           .name(quiz.getName())
+                                          .imageUrl(quiz.getImageUrl())
                                           .build());
         }
         return quizResponses;
@@ -37,6 +40,7 @@ public class QuizService {
                 .name(quiz.getName())
                 .description(quiz.getDescription())
                 .genre(quiz.getGenre())
+                .imageUrl(quiz.getImageUrl())
                 .build();
     }
 
@@ -45,7 +49,10 @@ public class QuizService {
         List<QuizResponse> quizResponses = new ArrayList<>();
 
         for (Quiz quiz : quizzes) {
-            quizResponses.add(QuizResponse.builder().name(quiz.getName()).build());
+            quizResponses.add(QuizResponse.builder()
+                    .name(quiz.getName())
+                    .imageUrl(quiz.getImageUrl())
+                    .build());
         }
 
         return quizResponses;
@@ -55,6 +62,14 @@ public class QuizService {
         Quiz quiz = quizRepository.findByName(name).orElseThrow(() -> new NotFoundException("Quiz not found!"));
 
         return quiz.getQuestions().stream().map(this::mapToQuestionResponse).toList();
+    }
+
+    public String uploadImage(MultipartFile multipartFile, String name) {
+        Quiz quiz = quizRepository.findByName(name).orElseThrow(() -> new NotFoundException("Article not found!"));
+
+        quiz.setImageUrl(uploadService.saveImage(multipartFile));
+        quizRepository.save(quiz);
+        return "Изображение успешно обновлено";
     }
 
     private QuestionsResponse mapToQuestionResponse(Question question) {

@@ -24,7 +24,10 @@ public class Quiz extends BaseEntity {
     @Enumerated(EnumType.STRING)
     Genre genre;
 
+    @Column(length = 8000)
     String description;
+
+    String imageUrl;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "quiz")
     List<Question> questions;

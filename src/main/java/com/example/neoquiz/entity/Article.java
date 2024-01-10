@@ -22,6 +22,8 @@ public class Article extends BaseEntity{
     @Column(length = 8000)
     String description;
 
+    String imageUrl;
+
     @Enumerated(EnumType.STRING)
     Genre genre;
 }
