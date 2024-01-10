@@ -46,6 +46,7 @@ public class ArticleController {
     }
 
     @GetMapping("/getCard")
+    @Operation(summary = "Get numbers: 1-8", description = "For image color")
     public CardResponse getCardForImage(@RequestParam String name) {
         return articleService.getCardAndNameForImage(name);
     }

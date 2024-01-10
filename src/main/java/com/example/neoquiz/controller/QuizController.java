@@ -30,11 +30,13 @@ public class QuizController {
     }
 
     @GetMapping("/main")
+    @Operation(summary = "Response: 4 quizzes", description = "Endpoint for main")
     public List<QuizResponse> getFourQuizzes() {
         return quizService.getFourQuizzesByName();
     }
 
     @GetMapping("/questions")
+    @Operation(summary = "Get quiz questions use quiz name")
     public List<QuestionsResponse> getQuestions(@RequestParam String name) {
         return quizService.getQuestionsByName(name);
     }
