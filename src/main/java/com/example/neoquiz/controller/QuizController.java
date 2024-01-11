@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/quizzes")
 @RequiredArgsConstructor
 public class QuizController {
+
     private final QuizService quizService;
 
     @GetMapping("/all")
