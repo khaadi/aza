@@ -16,7 +16,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 public class Question extends BaseEntity {
 
-    @Column(unique = true)
+    @Column(unique = true, length = 8000)
     String name;
 
     String AnswerTrue;
