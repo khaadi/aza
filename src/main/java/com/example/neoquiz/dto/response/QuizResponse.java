@@ -12,4 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class QuizResponse {
     String name;
     String imageUrl;
+    int colorId;
 }

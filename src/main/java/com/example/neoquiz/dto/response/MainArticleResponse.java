@@ -17,4 +17,5 @@ public class MainArticleResponse {
     Genre genre;
     String imageUrl;
     int size;
+    int colorId;
 }
