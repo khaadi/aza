@@ -24,6 +24,8 @@ public class Article extends BaseEntity{
 
     String imageUrl;
 
+    int colorId;
+
     @Enumerated(EnumType.STRING)
     Genre genre;
 }

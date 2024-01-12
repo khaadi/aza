@@ -28,6 +28,7 @@ public class QuizService {
             quizResponses.add(QuizResponse.builder()
                                           .name(quiz.getName())
                                           .imageUrl(quiz.getImageUrl())
+                                          .colorId(quiz.getColorId())
                                           .build());
         }
         return quizResponses;

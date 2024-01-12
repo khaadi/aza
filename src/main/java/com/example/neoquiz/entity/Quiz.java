@@ -29,6 +29,8 @@ public class Quiz extends BaseEntity {
 
     String imageUrl;
 
+    int colorId;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "quiz")
     List<Question> questions;
 }

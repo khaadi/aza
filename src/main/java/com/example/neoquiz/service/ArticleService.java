@@ -25,12 +25,14 @@ public class ArticleService {
     public List<MainArticleResponse> getAllArticles(Pageable pageable) {
         List<Article> articles = articleRepository.findAll(pageable).stream().toList();
         List<MainArticleResponse> mainArticleResponses = new ArrayList<>();
+
         for (Article article: articles) {
             mainArticleResponses.add(MainArticleResponse.builder()
                     .name(article.getName())
                     .genre(article.getGenre())
                     .imageUrl(article.getImageUrl())
                     .size(articles.size())
+                    .colorId(article.getColorId())
                     .build());
         }
 
