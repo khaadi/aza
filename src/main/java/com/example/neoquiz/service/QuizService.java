@@ -29,6 +29,7 @@ public class QuizService {
                                           .name(quiz.getName())
                                           .imageUrl(quiz.getImageUrl())
                                           .colorId(quiz.getColorId())
+                                          .id(quiz.getId())
                                           .build());
         }
         return quizResponses;
@@ -42,6 +43,7 @@ public class QuizService {
                 .description(quiz.getDescription())
                 .genre(quiz.getGenre())
                 .imageUrl(quiz.getImageUrl())
+                .id(quiz.getId())
                 .build();
     }
 
