@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class QuizResponse {
+    Long id;
     String name;
     String imageUrl;
     int colorId;
